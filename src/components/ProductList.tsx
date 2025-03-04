@@ -26,6 +26,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   const [filters, setFilters] = useState<FilterOptions>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState<Product[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -60,7 +61,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   const loadProducts = useCallback(
     (pageNum: number) => {
       setLoading(true);
-      let filteredProducts = filterProducts({
+      const filteredProducts = filterProducts({
         ...filters,
         page: pageNum,
         limit: 12,
