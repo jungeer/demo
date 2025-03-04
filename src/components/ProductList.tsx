@@ -60,10 +60,28 @@ export default function ProductList({ initialProducts }: ProductListProps) {
   const loadProducts = useCallback(
     (pageNum: number) => {
       setLoading(true);
-      const filteredProducts = filterProducts({
+      let filteredProducts = filterProducts({
         ...filters,
         page: pageNum,
         limit: 12,
+      });
+
+      // 应用排序
+      filteredProducts.sort((a, b) => {
+        const multiplier = sortDirection === "asc" ? 1 : -1;
+        switch (sortOption) {
+          case "price":
+          case "popularity":
+            return (a[sortOption] - b[sortOption]) * multiplier;
+          case "createdAt":
+            return (
+              (new Date(a.createdAt).getTime() -
+                new Date(b.createdAt).getTime()) *
+              multiplier
+            );
+          default:
+            return 0;
+        }
       });
 
       if (pageNum === 1) {
@@ -75,7 +93,7 @@ export default function ProductList({ initialProducts }: ProductListProps) {
       setHasMore(filteredProducts.length === 12);
       setLoading(false);
     },
-    [filters]
+    [filters, sortOption, sortDirection]
   );
 
   // 无限滚动
