@@ -15,6 +15,8 @@ export default function ThemeProvider({
     if (savedTheme) {
       setTheme(savedTheme);
       document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
 
     const handleScroll = () => {
@@ -27,7 +29,7 @@ export default function ThemeProvider({
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    document.documentElement.classList.toggle('dark');
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
     localStorage.setItem('theme', newTheme);
   };
 
@@ -36,24 +38,24 @@ export default function ThemeProvider({
   };
 
   return (
-    <div className={theme === 'dark' ? 'dark' : ''}>
+    <div>
       {children}
       
       <button
         onClick={toggleTheme}
-        className="fixed top-4 right-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        className="fixed top-4 right-4 p-2 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         aria-label="切换主题"
       >
-        {theme === 'light' ? '🌙' : '☀️'}
+        <span className="text-lg">{theme === 'light' ? '🌙' : '☀️'}</span>
       </button>
 
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+          className="fixed bottom-4 right-4 p-2 rounded-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           aria-label="滚动到顶部"
         >
-          ↑
+          <span className="text-lg">↑</span>
         </button>
       )}
     </div>

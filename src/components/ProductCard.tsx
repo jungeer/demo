@@ -7,7 +7,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md overflow-hidden">
       <div className="relative h-48 w-full">
         <Image
           src={product.image}
